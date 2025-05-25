@@ -17,6 +17,37 @@ This project ingests daily CSV uploads from supply chain (inventory, orders, shi
 
 ---
 
+## 📂 Repository Structure
+
+```
+Enterprise-Supply-Chain-Data-Lakehouse
+├── terraform/
+│   ├── main.tf             # Core infra: S3, Glue, Lambda, EventBridge, Athena
+│   ├── variables.tf        # Terraform variables
+│   ├── outputs.tf          # Outputs
+│   └── terraform.tfvars    # stores all the values of the variables. #IMP - Please update all the values before running the terraform sripts
+│   
+|── Raw_Data/
+|    
+├── glue_scripts/
+│   └── supply_chain_iceberg_job.py   # PySpark ETL using Iceberg
+│
+├── lambda_functions/
+│   ├── lambda_trigger.zip
+│   └── lambda_notifier.zip
+│
+├── sql/
+│   ├── views/
+│   │   ├── vw_inventory_summary.sql
+│   │   ├── vw_order_trends.sql
+│   │   ├── vw_shipment_status.sql
+│   │   ├── ... (total 10 view scripts)
+│   │   └── vw_dashboard_master.sql    # Master dashboard view
+│
+└── README.md               # High-level overview & instructions
+
+```
+
 ## 📐 Architecture
 
 ![Supply_chain_architecture_diagram drawio](https://github.com/user-attachments/assets/2f4c8e33-1747-4120-8963-039d0c265a7c)
@@ -86,15 +117,78 @@ This project ingests daily CSV uploads from supply chain (inventory, orders, shi
 
 ---
 
-### 🚀 Getting Started
 
-1. Clone this repo
-2. Configure AWS CLI & environment variables (bucket name, Glue job, IAM roles, SNS topic ARN)
-3. Deploy infrastructure (CloudFormation/Terraform/CDK) for S3 buckets, Glue job, EventBridge rules, Lambdas, SNS
-4. Upload sample CSVs to `raw/inventory/`, etc.
-5. Verify logs: Lambda → Glue job → S3 processed
-6. In Athena, run the `vw_dashboard_master` creation script
-7. In QuickSight, create dataset & build dashboard
+## 🚀 Getting Started
+
+1. **Clone the repo**:
+
+   ```bash
+   git clone https://github.com/rehaq007/Enterprise-Supply-Chain-Data-Lakehouse.git
+   cd Enterprise-Supply-Chain-Data-Lakehouse/terraform
+   ```
+
+2. **Upload Lambda ZIPs and Glue script**:
+
+   ```bash
+   aws s3 cp ../lambda_functions/lambda_trigger.zip s3://<your-code-bucket>/lambdas/
+   aws s3 cp ../lambda_functions/lambda_notifier.zip s3://<your-code-bucket>/lambdas/
+
+   aws s3 cp ../glue_scripts/supply_chain_iceberg_job.py s3://<your-code-bucket>/glue_scripts/supply_chain_iceberg_job.py"
+   
+   ```
+
+3. **Update terraform.tfvars with your values**
+
+   ```bash
+   account_id                  = "5392474*****"
+   data_bucket                 = "supply-chain-data-lakehouse-5392474*****-ap-south-1"
+   code_bucket                 = "my-code-bucket-5392474*****-ap-south-1"
+   lambda_code_s3_key_trigger  = "lambdas/lambda_trigger.zip"
+   lambda_code_s3_key_notifier = "lambdas/lambda_notifier.zip"
+   glue_script_s3_path         = "s3://my-code-bucket-5392474*****-ap-south-1/glue_scripts/supply_chain_iceberg_job.py"
+   notification_email          = "rehanq****@gmail.com"
+   ```
+
+4. **Bootstrap Terraform**:
+
+   ```bash
+   terraform init
+   terraform plan
+   terraform apply
+   ```
+
+4. **Data Modeling on top of Iceberg Tables using Athena**:
+
+   ```bash
+   for f in ../sql/views/*.sql; do
+     aws athena start-query-execution --work-group supply-chain-wg \
+       --query-string "$(< "$f")";
+   done
+   ```
+
+5. **View Dashboard**:
+
+   * Open Amazon QuickSight, connect to the Glue catalog, and use the `vw_dashboard_master` view.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Infra**: Terraform on AWS (S3, Glue, Lambda, EventBridge, Athena, SNS)
+* **ETL**: PySpark with Iceberg
+* **Analytics**: Athena SQL (+ Iceberg time travel views)
+* **BI**: Amazon QuickSight
+
+---
+
+## This repo showcases:
+
+* Production-grade architecture design
+* Infrastructure as code best practices
+* Event-driven, serverless pipelines
+* Advanced data modeling with Iceberg
+* Automated notifications and monitoring
+* Self-service analytics with Athena & QuickSight
 
 ---
 
