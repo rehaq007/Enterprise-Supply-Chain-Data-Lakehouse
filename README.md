@@ -1,6 +1,6 @@
 # Enterprise Supply Chain Data Lakehouse
 
-**A complete end-to-end, event-driven data lakehouse on AWS using Iceberg, Glue, Athena, and QuickSight.**
+**A complete end-to-end, event-driven data lakehouse on AWS using S3, Lambda, Iceberg, Glue, Athena, and QuickSight.**
 
 ---
 
@@ -27,7 +27,7 @@ Enterprise-Supply-Chain-Data-Lakehouse
 │   ├── outputs.tf          # Outputs
 │   └── terraform.tfvars    # stores all the values of the variables. #IMP - Please update all the values before running the terraform sripts
 │   
-|── Raw_Data/
+|── raw_data/
 |    
 ├── glue_scripts/
 │   └── supply_chain_iceberg_job.py   # PySpark ETL using Iceberg
@@ -36,13 +36,21 @@ Enterprise-Supply-Chain-Data-Lakehouse
 │   ├── lambda_trigger.zip
 │   └── lambda_notifier.zip
 │
-├── sql/
-│   ├── views/
-│   │   ├── vw_inventory_summary.sql
-│   │   ├── vw_order_trends.sql
-│   │   ├── vw_shipment_status.sql
-│   │   ├── ... (total 10 view scripts)
-│   │   └── vw_dashboard_master.sql    # Master dashboard view
+├── athena/
+│   ├── views/               # Individual SQL view definitions
+│   │   ├── vw_dim_inventory.sql
+│   │   ├── vw_dim_orders.sql
+│   │   ├── vw_dim_shipments.sql
+│   │   ├── vw_dim_suppliers.sql
+│   │   ├── vw_dim_warehouses.sql
+│   │   ├── vw_fact_inventory.sql
+│   │   ├── vw_fact_orders.sql
+│   │   ├── vw_fact_shipments.sql
+│   │   ├── vw_fact_suppliers.sql
+│   │   └── vw_fact_warehouses.sql
+│   └── vw_dashboard_master.sql
+├── quicksight/              # QuickSight dashboard files & specifications
+│   └── Supply_chain_inventory_Quicksight_dashboard.pdf
 │
 └── README.md               # High-level overview & instructions
 
@@ -84,13 +92,12 @@ Enterprise-Supply-Chain-Data-Lakehouse
 4. **Glue ETL Job** (`supply-chain-iceberg-job`)
 
 
-  ### Python/PySpark Glue script :
+      **Python/PySpark Glue script** :
   
-    1. Read raw CSV → DataFrame
-    2. Add ingestion_date
-    3. writeTo Iceberg (<db>.<folder>)
-       .option(auto-merge), partitionedBy ingestion_date
-    4. on failure → quarantine + archive raw
+        * Read raw CSV → DataFrame
+        * Add ingestion_date
+        * writeTo Iceberg (<db>.<folder>).option(auto-merge), partitionedBy ingestion_date
+        * on failure → quarantine + archive raw
 
 
 5. **Athena**
@@ -109,14 +116,6 @@ Enterprise-Supply-Chain-Data-Lakehouse
    * Visuals: IMP KPIs & Top Products bar chart
 
 ---
-
-### 📊 Dashboard KPIs
-
-![supply_chain_dashboard_quicksight](https://github.com/user-attachments/assets/a127d9a7-52d3-4733-baa3-d160c6f8d08f)
-
-
----
-
 
 ## 🚀 Getting Started
 
@@ -158,7 +157,9 @@ Enterprise-Supply-Chain-Data-Lakehouse
    ```
 5. **Upload the .csv raw files in the bucket**:
 
-   Ex: aws s3 cp inventory792.csv s3://supply-chain-data-lakehouse-53924746****-ap-south-1/raw/inventory/inventory792.csv
+   Ex:
+
+       aws s3 cp inventory792.csv s3://supply-chain-data-lakehouse-53924746****-ap-south-1/raw/inventory/inventory792.csv
 
        aws s3 cp orders792.csv s3://supply-chain-data-lakehouse-53924746****-ap-south-1/raw/orders/orders792.csv
 
@@ -166,20 +167,25 @@ Enterprise-Supply-Chain-Data-Lakehouse
 
        aws s3 cp supplier792.csv s3://supply-chain-data-lakehouse-53924746****-ap-south-1/raw/suppliers/supplier792.csv
 
-   Upload it one by one and let the job complete before uploading the next file. Check the job start and success notification.
+     * Upload it one by one and let the job complete before uploading the next file. Check the job start and success notification.
+
    
-4. **Data Modeling on top of Iceberg Tables using Athena**:
+6. **Data Modeling on top of Iceberg Tables using Athena**:
 
-*Open the athena query editor. Change the workgroup to "supply_chain_wg"*
-*fire all the .sql commands from Enterprise Supply Chain Data Lakehouse/sql/athena in athena query editor. This will create the data model on top of Iceberg tables.*
+  * Open the athena query editor. Change the workgroup to "supply_chain_wg"
+  * fire all the .sql commands from Enterprise Supply Chain Data Lakehouse/athena/views in athena query editor. This will create the data model on top of Iceberg tables.
  
-   ```
+   
 
-5. **View Dashboard**:
+7. **Create Quicksight Dashboard**
 
    * Open Amazon QuickSight, connect to the Glue catalog, and use the `vw_dashboard_master` view.
 
----
+    
+## Quicksight Dashboard
+
+![supply_chain_dashboard_quicksight](https://github.com/user-attachments/assets/9d0b62d4-6c85-4df3-a671-1ea7deb37b38)
+
 
 ## 🛠️ Tech Stack
 
