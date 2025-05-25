@@ -167,13 +167,13 @@ Enterprise-Supply-Chain-Data-Lakehouse
 
        aws s3 cp supplier792.csv s3://supply-chain-data-lakehouse-53924746****-ap-south-1/raw/suppliers/supplier792.csv
 
-     * Upload it one by one and let the job complete before uploading the next file. Check the job start and success notification.
+    * Upload it one by one and let the job complete before uploading the next file. Check the job start and success notification on your provided email id.
 
    
 6. **Data Modeling on top of Iceberg Tables using Athena**:
 
   * Open the athena query editor. Change the workgroup to "supply_chain_wg"
-  * fire all the .sql commands from Enterprise Supply Chain Data Lakehouse/athena/views in athena query editor. This will create the data model on top of Iceberg tables.
+  * Copy and fire all the .sql commands from this directory Enterprise Supply Chain Data Lakehouse/athena/views in athena query editor. This will create the data model on top of Iceberg tables.
  
    
 
