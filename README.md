@@ -156,14 +156,23 @@ Enterprise-Supply-Chain-Data-Lakehouse
    terraform plan
    terraform apply
    ```
+5. **Upload the .csv raw files in the bucket**:
 
+   Ex: aws s3 cp inventory792.csv s3://supply-chain-data-lakehouse-53924746****-ap-south-1/raw/inventory/inventory792.csv
+
+       aws s3 cp orders792.csv s3://supply-chain-data-lakehouse-53924746****-ap-south-1/raw/orders/orders792.csv
+
+       aws s3 cp shipment792.csv s3://supply-chain-data-lakehouse-53924746****-ap-south-1/raw/shipments/shipment792.csv
+
+       aws s3 cp supplier792.csv s3://supply-chain-data-lakehouse-53924746****-ap-south-1/raw/suppliers/supplier792.csv
+
+   Upload it one by one and let the job complete before uploading the next file. Check the job start and success notification.
+   
 4. **Data Modeling on top of Iceberg Tables using Athena**:
 
-   ```bash
-   for f in ../sql/views/*.sql; do
-     aws athena start-query-execution --work-group supply-chain-wg \
-       --query-string "$(< "$f")";
-   done
+*Open the athena query editor. Change the workgroup to "supply_chain_wg"*
+*fire all the .sql commands from Enterprise Supply Chain Data Lakehouse/sql/athena in athena query editor. This will create the data model on top of Iceberg tables.*
+ 
    ```
 
 5. **View Dashboard**:
