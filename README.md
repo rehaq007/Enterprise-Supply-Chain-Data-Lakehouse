@@ -216,5 +216,6 @@ Enterprise-Supply-Chain-Data-Lakehouse
 
 ---
 
-*Built by Rehan Qureshi, AWS Data Engineer.*
+*Built by Rehan Qureshi, AWS Data Engineer.*  
+[LinkedIn Profile](https://www.linkedin.com/in/rehan-qureshi-4a1078302/)
 
