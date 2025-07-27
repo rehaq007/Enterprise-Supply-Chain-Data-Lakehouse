@@ -1,0 +1,11 @@
+supplier_id,supplier_name,contact_name,phone,email,location
+SUP40001,SteelMart,Bob Moore,(733) 415-4675,bob@betasystems.net,Houston
+SUP40002,RawInnovations,Henry Hall,(712) 954-8467,henry@deltainnovations.io,Boston
+SUP40003,PrimeSolutions,Isabel Johnson,(169) 764-3644,isabel@induscorp.org,Orlando
+SUP40004,MegaSupplies,Mia Hall,(508) 594-4756,mia@logigear.com,Seattle
+SUP40005,AlphaGroup,Frank Rodriguez,(403) 221-3626,frank@betasystems.net,Orlando
+SUP40006,IndusChain,Henry Rodriguez,(273) 452-4129,henry@megasupply.com,Philadelphia
+SUP40007,RawEnterprises,Liam Johnson,(917) 725-9187,liam@globalparts.com,Miami
+SUP40008,AlphaMart,Charlie Davis,(897) 616-9945,charlie@induscorp.org,San Diego
+SUP40009,FastTrackGear,Mia Williams,(596) 115-9560,mia@gammagroup.org,Seattle
+SUP400010,LogiEnterprises,Isabel Johnson,(880) 211-4923,isabel@coreparts.tech,Atlanta

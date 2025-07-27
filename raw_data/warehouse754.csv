@@ -1,0 +1,11 @@
+warehouse_id,status_date,temperature,humidity,operational_status
+WH001,2023-07-21,28.9,49.0,Closed
+WH002,2023-09-06,23.6,40.9,Maintenance
+WH003,2023-09-15,18.0,43.5,Maintenance
+WH004,2023-09-20,20.1,68.0,Operational
+WH005,2023-08-26,22.1,67.9,Maintenance
+WH006,2023-07-21,25.0,61.2,Operational
+WH007,2023-09-07,28.7,42.9,Closed
+WH008,2023-07-02,18.3,40.2,Maintenance
+WH009,2023-09-09,26.1,57.1,Maintenance
+WH010,2023-07-24,28.4,43.4,Closed

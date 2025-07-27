@@ -1,0 +1,8 @@
+region                      = "ap-******"
+account_id                  = "5392474******"
+data_bucket                 = "supply-chain-data-lakehouse-5******************"
+code_bucket                 = "my-code-bucket-53************"
+lambda_code_s3_key_trigger  = "lambdas/lambda_trigger.zip"
+lambda_code_s3_key_notifier = "lambdas/lambda_notifier.zip"
+glue_script_s3_path         = "s3://my-code-bucket-**************/glue_scripts/supply_chain_iceberg_job.py"
+notification_email          = "rehan******@gmail.com"

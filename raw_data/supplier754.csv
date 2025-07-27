@@ -1,0 +1,11 @@
+supplier_id,supplier_name,contact_name,phone,email,location
+SUP40001,IndusSupply,Frank Ford,(342) 487-5434,frank@epsilonenterprises.co,Phoenix
+SUP40002,DeltaParts Inc.,Deborah Smith,(493) 812-7623,deborah@supplyco.net,New York
+SUP40003,GammaSystems,Grace Miller,(822) 642-1464,grace@epsilonenterprises.co,New York
+SUP40004,AlphaParts,Alice Lee,(790) 751-7383,alice@steelchain.biz,Boston
+SUP40005,DeltaParts,Deborah Ford,(691) 131-3586,deborah@megasupply.com,Los Angeles
+SUP40006,MegaEnterprises,Frank Garcia,(541) 382-3392,frank@induscorp.org,Chicago
+SUP40007,IndusEnterprises,Alice Ford,(172) 516-6754,alice@gammagroup.org,Miami
+SUP40008,GlobalGroup,Liam Smith,(885) 348-9771,liam@epsilonenterprises.co,San Francisco
+SUP40009,EpsilonMart,Eva Davis,(576) 110-5525,eva@logigear.com,Miami
+SUP400010,GammaChain,Bob Ford,(570) 552-3212,bob@coreparts.tech,San Francisco
